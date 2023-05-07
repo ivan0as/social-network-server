@@ -1,6 +1,6 @@
 const {Sequelize} = require('sequelize')
 
-module.exports = new Sequelize('postgres://fjaiixrp:9b4Jq-NTVu8S8306d7iWZU9AZIP0fvSu@lallah.db.elephantsql.com/fjaiixrp')
+module.exports = new Sequelize('postgresql://postgres:4PdiVExhHd9z2fpy5rKG@containers-us-west-45.railway.app:6091/railway')
 
 // module.exports = new Sequelize(
 //     process.env.DB_NAME,
