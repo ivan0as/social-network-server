@@ -39,7 +39,7 @@ class PostController {
 
             limit = limit || 10
 
-            const post = await Post.findAll({
+            const post = await Post.findAndCountAll({
                 where: {userId: id}, limit,
                 order: [['updatedAt', 'DESC']]
             })
@@ -59,7 +59,7 @@ class PostController {
 
             const userId = giveUserId(req)
             
-            const friends = await Friends.findAll({
+            const friends = await Friends.findAndCountAll({
                 include: [
                     {
                         model: User,
