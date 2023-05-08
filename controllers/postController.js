@@ -33,9 +33,12 @@ class PostController {
 
     async getOne(req, res, next) {
         try {
-            const { id } = req.params
+            const { id, limit } = req.params
+
+            limit = limit || 9
+
             const post = await Post.findAll({
-                where: {userId: id},
+                where: {userId: id}, limit,
                 order: [['updatedAt', 'DESC']]
             })
             const response = status(post)
@@ -47,6 +50,11 @@ class PostController {
 
     async getAllPostFriends(req, res, next) {
         try {
+
+            const { limit } = req.params
+
+            limit = limit || 9
+
             const userId = giveUserId(req)
             
             const friends = await Friends.findAll({
@@ -64,7 +72,7 @@ class PostController {
                     [Op.or]: [
                       { userId },
                       { user2Id: userId }
-                    ]
+                    ], limit
                 }
             })
 
