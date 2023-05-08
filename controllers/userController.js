@@ -102,6 +102,14 @@ class UserController {
 
             if (arrAdditionalVariables) {
                 user = await User.findAndCountAll({
+                    include: [
+                        {
+                            model: City
+                        },
+                        {
+                            model: University
+                        },
+                    ],
                     where:arrAdditionalVariables
                 })
             }
@@ -117,6 +125,14 @@ class UserController {
         try {
             const { id } = req.params
             const user = await User.findOne({
+                include: [
+                    {
+                        model: City
+                    },
+                    {
+                        model: University
+                    },
+                ],
                 where: {id}
             })
             const response = status(user)
