@@ -79,7 +79,8 @@ class PostController {
             })
 
             const post = await Post.findAll({
-                where: {userId: idFriends}
+                where: {userId: idFriends},
+                order: [['updatedAt', 'DESC']]
             })
 
             const response = status(post)
