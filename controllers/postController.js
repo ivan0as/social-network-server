@@ -33,7 +33,9 @@ class PostController {
 
     async getOne(req, res, next) {
         try {
-            let { id, limit } = req.params
+            const { id } = req.params
+
+            let { limit } = req.query
 
             limit = limit || 10
 
@@ -51,7 +53,7 @@ class PostController {
     async getAllPostFriends(req, res, next) {
         try {
 
-            let { limit } = req.params
+            let { limit } = req.query
 
             limit = limit || 10
 
