@@ -35,7 +35,8 @@ class PostController {
         try {
             const { id } = req.params
             const post = await Post.findAll({
-                where: {userId: id}
+                where: {userId: id},
+                order: '"createdAt" DESC'
             })
             const response = status(post)
             return res.json(response)
