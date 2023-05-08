@@ -1,6 +1,6 @@
 const uuid = require('uuid')
 const path = require('path')
-const { Post, Friends, User } = require('../models/models')
+const { Post, Friends, User, Likes } = require('../models/models')
 const ApiError = require('../error/ApiError')
 const giveUserId = require('../middleware/giveUserIdMiddleware')
 const { Op } = require("sequelize")
@@ -33,17 +33,35 @@ class PostController {
 
     async getOne(req, res, next) {
         try {
+
             const { id } = req.params
 
             let { limit } = req.query
 
             limit = limit || 10
 
-            const post = await Post.findAndCountAll({
+            const posts = await Post.findAndCountAll({
+                include: [
+                    {
+                        model: Likes,
+                    },
+                ],
                 where: {userId: id}, limit,
                 order: [['updatedAt', 'DESC']]
             })
-            const response = status(post)
+
+            // posts.rows.forEach(post => {
+            //     post.likesCount = post.likes.length
+    
+            //     if (post.likes.find(item => item.userId === userId)) {
+            //         post.likeCheck = true
+            //     } else {
+            //         post.likeCheck = false
+            //     }
+            // })
+
+
+            const response = status(posts)
             return res.json(response)
         } catch (e) {
             next(ApiError.badRequest(e.message))
