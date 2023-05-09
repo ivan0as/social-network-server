@@ -152,6 +152,41 @@ class ConfirmFriendController {
             next(ApiError.badRequest(e.message))
         }
     }
+
+    async deleteApplication(req, res, next) {
+        try {
+
+            const { id } = req.params
+
+            const userId = giveUserId(req)
+
+            const confirmFriend = await ConfirmFriend.findOne({
+                include: [
+                    {
+                        model: User,
+                        as: 'user'
+                    },
+                    {
+                        model: User,
+                        as: 'user2'
+                    },
+                ],
+                where: {id}
+            })
+
+            if (!(userId === confirmFriend.user2.id)) {
+                return next(ApiError.badRequest('Не правильный запрос'))
+            }
+            
+            const deleteConfirmFriend = await ConfirmFriend.destroy({
+                where: {id}
+            })
+            const response = status(deleteConfirmFriend)
+            return res.json(response)
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
+    }
 }
 
 module.exports = new ConfirmFriendController()
