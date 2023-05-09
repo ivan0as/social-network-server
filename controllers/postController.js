@@ -23,7 +23,16 @@ class PostController {
 
             const post = await Post.create({ text, userId, img: fileName })
 
-            const response = status(post)
+            const postResponse = await Post.findAll({
+                include: [
+                    {
+                        model: Likes,
+                    },
+                ],
+                where: {id: post.id}
+            })
+
+            const response = status(postResponse)
             return res.json(response)
 
         } catch (e) {
