@@ -75,7 +75,7 @@ class PostController {
 
             const userId = giveUserId(req)
             
-            const friends = await Friends.findAndCountAll({
+            const friends = await Friends.findAll({
                 include: [
                     {
                         model: User,
@@ -96,7 +96,7 @@ class PostController {
 
             const idFriends = []
 
-            friends.rows.map(friend => {
+            friends.map(friend => {
                 if (userId !== friend.user.id) {
                     idFriends.push(friend.user.id)
                 } else {
@@ -104,7 +104,7 @@ class PostController {
                 }
             })
 
-            const post = await Post.findAll({
+            const post = await Post.findAndCountAll({
                 include: [
                     {
                         model: Likes,
