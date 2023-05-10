@@ -59,17 +59,6 @@ class PostController {
                 order: [['updatedAt', 'DESC']]
             })
 
-            // posts.rows.forEach(post => {
-            //     post.likesCount = post.likes.length
-    
-            //     if (post.likes.find(item => item.userId === userId)) {
-            //         post.likeCheck = true
-            //     } else {
-            //         post.likeCheck = false
-            //     }
-            // })
-
-
             const response = status(posts)
             return res.json(response)
         } catch (e) {
@@ -102,13 +91,12 @@ class PostController {
                       { userId },
                       { user2Id: userId }
                     ]
-                },
-                limit
+                }
             })
 
             const idFriends = []
 
-            friends.map(friend => {
+            friends.rows.map(friend => {
                 if (userId !== friend.user.id) {
                     idFriends.push(friend.user.id)
                 } else {
@@ -117,8 +105,14 @@ class PostController {
             })
 
             const post = await Post.findAll({
+                include: [
+                    {
+                        model: Likes,
+                    },
+                ],
                 where: {userId: idFriends},
-                order: [['updatedAt', 'DESC']]
+                order: [['updatedAt', 'DESC']],
+                limit
             })
 
             const response = status(post)
