@@ -28,6 +28,9 @@ class PostController {
                     {
                         model: Likes,
                     },
+                    {
+                        model: User,
+                    },
                 ],
                 where: {id: post.id}
             })
