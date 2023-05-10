@@ -54,6 +54,9 @@ class PostController {
                     {
                         model: Likes,
                     },
+                    {
+                        model: User,
+                    },
                 ],
                 where: {userId: id}, limit,
                 order: [['updatedAt', 'DESC']]
@@ -108,6 +111,9 @@ class PostController {
                 include: [
                     {
                         model: Likes,
+                    },
+                    {
+                        model: User,
                     },
                 ],
                 where: {userId: idFriends},
