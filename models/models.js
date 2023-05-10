@@ -22,7 +22,7 @@ const University = sequelize.define('university', {
 
 const Post = sequelize.define('post', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    text: {type: DataTypes.STRING, allowNull: false},
+    text: {type: DataTypes.TEXT, allowNull: false},
     img: {type: DataTypes.STRING},
 })
 
